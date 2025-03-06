@@ -10,7 +10,7 @@ Route::get('/', function () {
 
 // Group dengan middleware auth
 Route::middleware(['auth'])->group(function () {
-    Route::get('/barang', [BarangController::class, 'index']);
+    Route::get('/barang', [BarangController::class, 'index'])->name('barang');
     Route::get('/barang/tambah', [BarangController::class, 'create']);
     Route::post('/barang/store', [BarangController::class, 'store'])->name('barang.store');
     Route::get('/barang/edit/{id}', [BarangController::class, 'edit']);
