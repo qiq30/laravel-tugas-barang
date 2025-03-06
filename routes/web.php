@@ -3,9 +3,8 @@
 use App\Http\Controllers\BarangController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Langsung ke daftar barang saat membuka Laravel
+Route::get('/', [BarangController::class, 'index']);
 
 // Route untuk CRUD Barang
 Route::get('/barang', [BarangController::class, 'index']);
