@@ -4,25 +4,27 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Barang;
+use Illuminate\Support\Facades\Auth;
 
 class BarangController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(request $request)
+    public function index(Request $request)
     {
-        //
-        $query = Barang::query();
+        // Hanya menampilkan barang milik user yang login
+        $query = Barang::where('user_id', Auth::id());
 
         if ($request->has('search')) {
             $search = $request->search;
-            $query->where('nama_barang', 'LIKE', "%{$search}%")
-                ->orWhere('kategori', 'LIKE', "%{$search}%");
+            $query->where(function ($q) use ($search) {
+                $q->where('nama_barang', 'LIKE', "%{$search}%")
+                    ->orWhere('kategori', 'LIKE', "%{$search}%");
+            });
         }
 
         $data = $query->get();
-
         return view('barang', compact('data'));
     }
 
@@ -31,7 +33,6 @@ class BarangController extends Controller
      */
     public function create()
     {
-        //
         return view('tambah_barang');
     }
 
@@ -40,7 +41,6 @@ class BarangController extends Controller
      */
     public function store(Request $request)
     {
-        //
         $request->validate([
             'nama_barang' => 'required',
             'kategori' => 'required',
@@ -54,6 +54,7 @@ class BarangController extends Controller
         $total_laba = $request->barang_terjual * ($request->harga_jual - $request->harga_modal);
 
         Barang::create([
+            'user_id' => Auth::id(), // Menyimpan sesuai user yang login
             'nama_barang' => $request->nama_barang,
             'kategori' => $request->kategori,
             'stok' => $request->stok,
@@ -68,20 +69,11 @@ class BarangController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      */
     public function edit(string $id)
     {
-        //
-        $data = Barang::findOrFail($id);
+        $data = Barang::where('id', $id)->where('user_id', Auth::id())->firstOrFail();
         return view('edit_barang', compact('data'));
     }
 
@@ -90,7 +82,6 @@ class BarangController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
         $request->validate([
             'nama_barang' => 'required',
             'kategori' => 'required',
@@ -103,7 +94,7 @@ class BarangController extends Controller
         $total_pendapatan = $request->barang_terjual * $request->harga_jual;
         $total_laba = $request->barang_terjual * ($request->harga_jual - $request->harga_modal);
 
-        $barang = Barang::findOrFail($id);
+        $barang = Barang::where('id', $id)->where('user_id', Auth::id())->firstOrFail();
         $barang->update([
             'nama_barang' => $request->nama_barang,
             'kategori' => $request->kategori,
@@ -123,9 +114,9 @@ class BarangController extends Controller
      */
     public function destroy(string $id)
     {
-        //
-        $barang = Barang::findOrFail($id);
+        $barang = Barang::where('id', $id)->where('user_id', Auth::id())->firstOrFail();
         $barang->delete();
+
         return redirect('/barang')->with('success', 'Barang berhasil dihapus');
     }
 }

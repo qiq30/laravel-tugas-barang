@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('barangs', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade'); // Hubungkan dengan users
             $table->string('nama_barang', 100);
             $table->string('kategori', 50);
             $table->integer('stok');
