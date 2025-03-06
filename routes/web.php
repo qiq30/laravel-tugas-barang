@@ -8,13 +8,15 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Route untuk CRUD Barang
-Route::get('/barang', [BarangController::class, 'index']);
-Route::get('/barang/tambah', [BarangController::class, 'create']);
-Route::post('/barang/store', [BarangController::class, 'store'])->name('barang.store');
-Route::get('/barang/edit/{id}', [BarangController::class, 'edit']);
-Route::post('/barang/update/{id}', [BarangController::class, 'update'])->name('barang.update');
-Route::get('/barang/hapus/{id}', [BarangController::class, 'destroy']);
+// Group dengan middleware auth
+Route::middleware(['auth'])->group(function () {
+    Route::get('/barang', [BarangController::class, 'index']);
+    Route::get('/barang/tambah', [BarangController::class, 'create']);
+    Route::post('/barang/store', [BarangController::class, 'store'])->name('barang.store');
+    Route::get('/barang/edit/{id}', [BarangController::class, 'edit']);
+    Route::post('/barang/update/{id}', [BarangController::class, 'update'])->name('barang.update');
+    Route::get('/barang/hapus/{id}', [BarangController::class, 'destroy']);
+});
 
 Route::get('/dashboard', function () {
     return view('dashboard');
