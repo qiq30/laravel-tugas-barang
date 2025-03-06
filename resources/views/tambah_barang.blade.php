@@ -1,58 +1,69 @@
 @extends('app')
+
 @section('content')
-    <div class="container max-w-4xl mx-auto mt-6">
+    <div class="container max-w-4xl mx-auto mt-6 px-4">
         <h3 class="text-3xl font-semibold text-gray-800 mb-4">Form Barang</h3>
 
         <!-- Form Barang -->
         <form action="{{ route('barang.store') }}" method="POST" class="bg-white p-6 rounded-lg shadow-md">
             @csrf
-            <!-- Nama Barang -->
-            <div class="mb-4">
-                <label for="nama_barang" class="block text-lg font-medium text-gray-700">Nama Barang</label>
-                <input class="form-control w-full p-3 border border-gray-300 rounded-md shadow-sm" type="text"
-                    name="nama_barang" id="nama_barang" placeholder="Masukkan Nama Barang">
-            </div>
 
-            <!-- Kategori -->
-            <div class="mb-4">
-                <label for="kategori" class="block text-lg font-medium text-gray-700">Kategori</label>
-                <input class="form-control w-full p-3 border border-gray-300 rounded-md shadow-sm" type="text"
-                    name="kategori" id="kategori" placeholder="Masukkan Kategori">
-            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <!-- Nama Barang -->
+                <div>
+                    <label for="nama_barang" class="block text-lg font-medium text-gray-700">Nama Barang</label>
+                    <input type="text" name="nama_barang" id="nama_barang"
+                        class="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                        placeholder="Masukkan Nama Barang">
+                </div>
 
-            <!-- Stok -->
-            <div class="mb-4">
-                <label for="stok" class="block text-lg font-medium text-gray-700">Stok</label>
-                <input class="form-control w-full p-3 border border-gray-300 rounded-md shadow-sm" type="number"
-                    name="stok" id="stok" placeholder="Masukkan Stok Barang">
-            </div>
+                <!-- Kategori -->
+                <div>
+                    <label for="kategori" class="block text-lg font-medium text-gray-700">Kategori</label>
+                    <input type="text" name="kategori" id="kategori"
+                        class="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                        placeholder="Masukkan Kategori">
+                </div>
 
-            <!-- Harga Modal -->
-            <div class="mb-4">
-                <label for="harga_modal" class="block text-lg font-medium text-gray-700">Harga Modal</label>
-                <input class="form-control w-full p-3 border border-gray-300 rounded-md shadow-sm" type="number"
-                    name="harga_modal" id="harga_modal" placeholder="Masukkan Harga Modal">
-            </div>
+                <!-- Stok -->
+                <div>
+                    <label for="stok" class="block text-lg font-medium text-gray-700">Stok</label>
+                    <input type="number" name="stok" id="stok"
+                        class="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                        placeholder="Masukkan Stok Barang">
+                </div>
 
-            <!-- Harga Jual -->
-            <div class="mb-4">
-                <label for="harga_jual" class="block text-lg font-medium text-gray-700">Harga Jual</label>
-                <input class="form-control w-full p-3 border border-gray-300 rounded-md shadow-sm" type="number"
-                    name="harga_jual" id="harga_jual" placeholder="Masukkan Harga Jual">
-            </div>
+                <!-- Harga Modal -->
+                <div>
+                    <label for="harga_modal" class="block text-lg font-medium text-gray-700">Harga Modal</label>
+                    <input type="number" name="harga_modal" id="harga_modal"
+                        class="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                        placeholder="Masukkan Harga Modal">
+                </div>
 
-            <!-- Barang Terjual -->
-            <div class="mb-4">
-                <label for="barang_terjual" class="block text-lg font-medium text-gray-700">Barang Terjual</label>
-                <input class="form-control w-full p-3 border border-gray-300 rounded-md shadow-sm" type="number"
-                    name="barang_terjual" id="barang_terjual" placeholder="Masukkan Barang Terjual">
+                <!-- Harga Jual -->
+                <div>
+                    <label for="harga_jual" class="block text-lg font-medium text-gray-700">Harga Jual</label>
+                    <input type="number" name="harga_jual" id="harga_jual"
+                        class="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                        placeholder="Masukkan Harga Jual">
+                </div>
+
+                <!-- Barang Terjual -->
+                <div>
+                    <label for="barang_terjual" class="block text-lg font-medium text-gray-700">Barang Terjual</label>
+                    <input type="number" name="barang_terjual" id="barang_terjual"
+                        class="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                        placeholder="Masukkan Barang Terjual">
+                </div>
             </div>
 
             <!-- Tombol Submit -->
-            <div class="mt-4">
-                <input type="submit"
-                    class="btn btn-success w-full py-2 text-white font-semibold rounded-md shadow-md hover:bg-green-700 transition duration-300"
-                    value="Save">
+            <div class="mt-6">
+                <button type="submit"
+                    class="w-full py-2 bg-green-600 text-white font-semibold rounded-md shadow-md hover:bg-green-700 transition duration-300">
+                    Simpan
+                </button>
             </div>
         </form>
     </div>
