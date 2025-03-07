@@ -53,16 +53,20 @@
                         <tbody>
                             @foreach ($data as $row)
                                 <tr class="border text-xs sm:text-base">
-                                    <td class="border px-2 sm:px-4 py-2 text-gray-700">{{ $row->nama_barang }}</td>
-                                    <td class="border px-2 sm:px-4 py-2 text-gray-700">{{ $row->kategori }}</td>
-                                    <td class="border px-2 sm:px-4 py-2 text-gray-700">{{ $row->stok }} unit</td>
-                                    <td class="border px-2 sm:px-4 py-2 text-gray-700">
+                                    <td class="border px-2 sm:px-4 py-2 text-gray-900 dark:text-gray-200">
+                                        {{ $row->nama_barang }}</td>
+                                    <td class="border px-2 sm:px-4 py-2 text-gray-900 dark:text-gray-200">
+                                        {{ $row->kategori }}</td>
+                                    <td class="border px-2 sm:px-4 py-2 text-gray-900 dark:text-gray-200">
+                                        {{ $row->stok }} unit</td>
+                                    <td class="border px-2 sm:px-4 py-2 text-gray-900 dark:text-gray-200">
                                         Rp{{ number_format($row->harga_modal, 0, ',', '.') }}
                                     </td>
-                                    <td class="border px-2 sm:px-4 py-2 text-gray-700">
+                                    <td class="border px-2 sm:px-4 py-2 text-gray-900 dark:text-gray-200">
                                         Rp{{ number_format($row->harga_jual, 0, ',', '.') }}
                                     </td>
-                                    <td class="border px-2 sm:px-4 py-2 text-gray-700">{{ $row->barang_terjual }} unit
+                                    <td class="border px-2 sm:px-4 py-2 text-gray-900 dark:text-gray-200">
+                                        {{ $row->barang_terjual }} unit
                                     </td>
                                     <td class="border px-2 sm:px-4 py-2 text-green-600 font-semibold">
                                         Rp{{ number_format($row->total_pendapatan, 0, ',', '.') }}
@@ -74,7 +78,7 @@
                                         <div class="flex flex-col sm:flex-row gap-2">
                                             <!-- Tombol Edit -->
                                             <a href="barang/edit/{{ $row->id }}"
-                                                class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded w-full sm:w-auto">
+                                                class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded w-full sm:w-auto text-center flex items-center justify-center">
                                                 Edit
                                             </a>
                                             <!-- Tombol Hapus -->
