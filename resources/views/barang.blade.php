@@ -22,17 +22,14 @@
                             class="border px-3 py-2 rounded w-full sm:w-64" placeholder="Cari barang...">
                         <!-- Tombol Cari -->
                         <button type="submit"
-                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded w-full sm:w-auto text-lg sm:text-base">
+                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                             Cari
                         </button>
-
                     </form>
                     <a href="barang/tambah">
-                        <button
-                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded w-full sm:w-auto text-lg sm:text-base">
+                        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded sm:w-auto">
                             Tambah Barang
                         </button>
-
                     </a>
                 </div>
 
