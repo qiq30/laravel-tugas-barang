@@ -16,21 +16,23 @@
 
                 <!-- Tambah Barang & Pencarian -->
                 <div class="mb-4 flex flex-col sm:flex-row sm:justify-between sm:items-center space-y-3 sm:space-y-0">
-                    <h3 class="text-2xl font-semibold text-gray-700">Daftar Barang</h3>
+                    <h3 class="text-2xl font-semibold text-gray-900 dark:text-gray-200">Daftar Barang</h3>
                     <form action="{{ url('barang') }}" method="GET" class="flex flex-wrap gap-2">
                         <input type="text" name="search" value="{{ request('search') }}"
                             class="border px-3 py-2 rounded w-full sm:w-64" placeholder="Cari barang...">
                         <!-- Tombol Cari -->
                         <button type="submit"
-                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded w-full sm:w-auto text-lg sm:text-base">
                             Cari
                         </button>
+
                     </form>
                     <a href="barang/tambah">
                         <button
-                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full sm:w-auto">
+                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded w-full sm:w-auto text-lg sm:text-base">
                             Tambah Barang
                         </button>
+
                     </a>
                 </div>
 
