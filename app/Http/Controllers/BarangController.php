@@ -52,13 +52,16 @@ class BarangController extends Controller
 
         // Validasi barang terjual tidak boleh lebih dari stok
         if ($request->barang_terjual > $request->stok) {
-            return redirect()->back()->withErrors(['barang_terjual' => 'Jumlah barang terjual tidak boleh lebih dari stok.'])->withInput();
+            return redirect()->back()
+                ->withErrors(['barang_terjual' => 'Jumlah barang terjual tidak boleh lebih dari stok.'])
+                ->withInput(); // Menyimpan input ke form agar tidak hilang
         }
 
         $total_pendapatan = $request->barang_terjual * $request->harga_jual;
         $total_laba = $request->barang_terjual * ($request->harga_jual - $request->harga_modal);
 
-        Barang::create([
+        // Simpan data
+        $barang = Barang::create([
             'user_id' => Auth::id(),
             'nama_barang' => $request->nama_barang,
             'kategori' => $request->kategori,
@@ -70,8 +73,16 @@ class BarangController extends Controller
             'total_laba' => $total_laba
         ]);
 
-        return redirect('/barang')->with('success', 'Barang berhasil ditambahkan');
+        // Pastikan data benar-benar tersimpan sebelum menampilkan notifikasi
+        if ($barang) {
+            \Flasher\Laravel\Facade\Flasher::addSuccess('Barang berhasil ditambahkan');
+        } else {
+            \Flasher\Laravel\Facade\Flasher::addError('Gagal menambahkan barang');
+        }
+
+        return redirect('/barang');
     }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -100,13 +111,16 @@ class BarangController extends Controller
 
         // Validasi barang terjual tidak boleh lebih dari stok
         if ($request->barang_terjual > $request->stok) {
-            return redirect()->back()->withErrors(['barang_terjual' => 'Jumlah barang terjual tidak boleh lebih dari stok.'])->withInput();
+            return redirect()->back()
+                ->withErrors(['barang_terjual' => 'Jumlah barang terjual tidak boleh lebih dari stok.'])
+                ->withInput();
         }
 
         $total_pendapatan = $request->barang_terjual * $request->harga_jual;
         $total_laba = $request->barang_terjual * ($request->harga_jual - $request->harga_modal);
 
-        $barang->update([
+        // Simpan data baru ke model tanpa langsung update
+        $barang->fill([
             'nama_barang' => $request->nama_barang,
             'kategori' => $request->kategori,
             'stok' => $request->stok,
@@ -117,8 +131,17 @@ class BarangController extends Controller
             'total_laba' => $total_laba
         ]);
 
-        return redirect('/barang')->with('success', 'Barang berhasil diperbarui');
+        // Periksa apakah ada perubahan pada data sebelum menyimpan
+        if ($barang->isDirty()) {
+            $barang->save(); // Hanya update jika ada perubahan
+            \Flasher\Laravel\Facade\Flasher::addSuccess('Barang berhasil diperbarui');
+        } else {
+            \Flasher\Laravel\Facade\Flasher::addInfo('Tidak ada perubahan data');
+        }
+
+        return redirect('/barang');
     }
+
 
     /**
      * Remove the specified resource from storage.
