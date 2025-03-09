@@ -44,17 +44,22 @@ class BarangController extends Controller
         $request->validate([
             'nama_barang' => 'required',
             'kategori' => 'required',
-            'stok' => 'required|integer',
-            'harga_modal' => 'required|integer',
-            'harga_jual' => 'required|integer',
-            'barang_terjual' => 'required|integer'
+            'stok' => 'required|integer|min:0',
+            'harga_modal' => 'required|integer|min:0',
+            'harga_jual' => 'required|integer|min:0',
+            'barang_terjual' => 'required|integer|min:0'
         ]);
+
+        // Validasi barang terjual tidak boleh lebih dari stok
+        if ($request->barang_terjual > $request->stok) {
+            return redirect()->back()->withErrors(['barang_terjual' => 'Jumlah barang terjual tidak boleh lebih dari stok.'])->withInput();
+        }
 
         $total_pendapatan = $request->barang_terjual * $request->harga_jual;
         $total_laba = $request->barang_terjual * ($request->harga_jual - $request->harga_modal);
 
         Barang::create([
-            'user_id' => Auth::id(), // Menyimpan sesuai user yang login
+            'user_id' => Auth::id(),
             'nama_barang' => $request->nama_barang,
             'kategori' => $request->kategori,
             'stok' => $request->stok,
@@ -85,16 +90,22 @@ class BarangController extends Controller
         $request->validate([
             'nama_barang' => 'required',
             'kategori' => 'required',
-            'stok' => 'required|integer',
-            'harga_modal' => 'required|integer',
-            'harga_jual' => 'required|integer',
-            'barang_terjual' => 'required|integer'
+            'stok' => 'required|integer|min:0',
+            'harga_modal' => 'required|integer|min:0',
+            'harga_jual' => 'required|integer|min:0',
+            'barang_terjual' => 'required|integer|min:0'
         ]);
+
+        $barang = Barang::where('id', $id)->where('user_id', Auth::id())->firstOrFail();
+
+        // Validasi barang terjual tidak boleh lebih dari stok
+        if ($request->barang_terjual > $request->stok) {
+            return redirect()->back()->withErrors(['barang_terjual' => 'Jumlah barang terjual tidak boleh lebih dari stok.'])->withInput();
+        }
 
         $total_pendapatan = $request->barang_terjual * $request->harga_jual;
         $total_laba = $request->barang_terjual * ($request->harga_jual - $request->harga_modal);
 
-        $barang = Barang::where('id', $id)->where('user_id', Auth::id())->firstOrFail();
         $barang->update([
             'nama_barang' => $request->nama_barang,
             'kategori' => $request->kategori,
