@@ -53,8 +53,8 @@ class BarangController extends Controller
         // Validasi barang terjual tidak boleh lebih dari stok
         if ($request->barang_terjual > $request->stok) {
             return redirect()->back()
-                ->withErrors(['barang_terjual' => 'Jumlah barang terjual tidak boleh lebih dari stok.'])
-                ->withInput(); // Menyimpan input ke form agar tidak hilang
+                ->withInput()
+                ->with('error', 'Jumlah barang terjual tidak boleh lebih dari stok.');
         }
 
         $total_pendapatan = $request->barang_terjual * $request->harga_jual;
@@ -110,10 +110,10 @@ class BarangController extends Controller
         $barang = Barang::where('id', $id)->where('user_id', Auth::id())->firstOrFail();
 
         // Validasi barang terjual tidak boleh lebih dari stok
-        if ($request->barang_terjual > $request->stok) {
+        if ($request->barang_terjual > $barang->stok) {
             return redirect()->back()
-                ->withErrors(['barang_terjual' => 'Jumlah barang terjual tidak boleh lebih dari stok.'])
-                ->withInput();
+                ->withInput()
+                ->with('error', 'Jumlah barang terjual tidak boleh lebih dari stok.');
         }
 
         $total_pendapatan = $request->barang_terjual * $request->harga_jual;
